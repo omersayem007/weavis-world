@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
-import '../css/test.css'
+import {withRouter} from 'react-router-dom';
+import auth0Client from '../auth/Auth';
+import '../css/test.css';
+
+
 
 class Topbar extends Component {
-    
+
+
+  signOut =(props) => {
+
+    auth0Client.signOut();
+    this.props.history.replace('/');     
+}
+ 
+
   render() {
     
 
@@ -17,34 +29,21 @@ class Topbar extends Component {
         </a>
       </div>
       <div id="navbarBasicExample" className="navbar-menu">
+
+      {
+
+        auth0Client.isAuthenticated() &&
         <div className="navbar-start">
-          <a className="navbar-item">
-            Home
-          </a>
-          <a className="navbar-item">
-            Profile
-          </a>
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">
-              More
-            </a>
-            <div className="navbar-dropdown">
-              <a className="navbar-item">
-                About
-              </a>
-              <a className="navbar-item">
-                Jobs
-              </a>
-              <a className="navbar-item">
-                Contact
-              </a>
-              <hr className="navbar-divider" />
-              <a className="navbar-item">
-                Report an issue
-              </a>
-            </div>
-          </div>
-        </div>
+        <a className="navbar-item">
+          Home
+        </a>
+        <a className="navbar-item">
+          Profile
+        </a>
+      </div>
+      
+      }
+
 
         <div>
           <span className="navbar-item">Sunday, 12th December</span>
@@ -54,15 +53,37 @@ class Topbar extends Component {
           <span className="navbar-item">30*C</span>
         </div>
 
-        <div className="navbar-end">
+        {
+
+          !auth0Client.isAuthenticated() &&
+          <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <a className="button is-light">
-                Log out
-              </a>
+              <button className="button is-light" onClick={auth0Client.signIn}>
+                Log in
+              </button>
             </div>
           </div>
         </div>
+
+        }
+
+        {
+
+          auth0Client.isAuthenticated() &&
+          <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons">
+              <button className="button is-light" onClick={this.signOut}>
+                Log out
+              </button>
+            </div>
+          </div>
+        </div>
+
+        }
+
+
       </div>
     </nav>    
       
@@ -70,4 +91,4 @@ class Topbar extends Component {
   }
 }
 
-export default Topbar;
+export default withRouter(Topbar) ;

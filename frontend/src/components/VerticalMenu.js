@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import '../css/test.css';
 
 class VerticalMenu extends Component {
@@ -11,11 +12,10 @@ class VerticalMenu extends Component {
     General
   </p>
   <ul class="menu-list">
-    <li><a>Dashboard</a></li>
-    <li><a>Forecast</a></li>
-    <li><a>Social</a></li>
-    <li><a>Feedback</a></li>
-    <li><a>Tips</a></li>
+    <Link to='/foreCast'>Forecast</Link>
+    <Link to='/social'>Social</Link>
+    <Link to='/feedback'>feedback</Link>
+    <Link to='/tips'>Tips</Link>
   </ul>
   <p class="menu-label">
     Entertainment
